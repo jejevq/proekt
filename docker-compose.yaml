@@ -4,7 +4,7 @@ services:
     container_name: sql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 270627Vit
+      MYSQL_ROOT_PASSWORD: devops366
       MYSQL_ROOT_HOST: "%"
       MYSQL_DATABASE: proekt
     volumes:
