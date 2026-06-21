@@ -19,7 +19,7 @@ var db *sql.DB
 
 func main() {
     // Подключение к MySQL — замени пароль и имя базы на свои
-    connStr := "root:parol ne skaju@tcp(172.17.0.1:3308)/proekt"
+    connStr := "root:devops366@tcp(172.17.0.1:3308)/proekt"
     var err error
     db, err = sql.Open("mysql", connStr)
     if err != nil {
