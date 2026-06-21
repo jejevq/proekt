@@ -1,0 +1,10 @@
+**/.git
+**/node_modules
+**/tmp
+**/snap
+**/.mozilla
+**/.cache
+**/*.log
+**/*.md
+Dockerfile
+.dockerignore
