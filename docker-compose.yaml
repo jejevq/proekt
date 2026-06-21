@@ -21,7 +21,7 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_USER: root
-      DB_PASSWORD: 270627Vit
+      DB_PASSWORD: devops366
       DB_NAME: proekt
     depends_on:
       - db
