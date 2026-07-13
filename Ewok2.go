@@ -62,14 +62,16 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
         http.Redirect(w, r, "/", http.StatusSeeOther)
         return
     }
-
     // Читаем значение поля "text" из формы
     text := r.FormValue("text")
     if text == "" {
         http.Redirect(w, r, "/?msg=Пустая+строка,+попробуйте+снова", http.StatusSeeOther)
         return
     }
-
+	if len(text) > 40 {
+        http.Redirect(w, r, "/?msg=Ошибка:+максимальная+длина+40+символов", http.StatusSeeOther)
+        return
+    }
     // Вставка в таблицу proekt в столбец out
     stmt, err := db.Prepare("INSERT INTO proekt(`out`) VALUES(?)")
     if err != nil {
