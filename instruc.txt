@@ -1,0 +1,17 @@
+docker compose up -d --scale app=3 (запустить 3 копии, можно менять)
+docker compose down (остановить)
+docker compose restart nginx       # только Nginx
+docker compose restart app         # все экземпляры Go-сервера
+docker compose restart db          # MySQL
+docker compose logs -f --tail=20 app    # только Go-серверы
+docker compose logs -f --tail=20 nginx  # только Nginx
+docker compose logs -f                  # всё сразу
+
+ПЕРЕЗАПУСК
+
+docker compose build app
+docker compose up -d --scale app=3
+
+docker exec -it sql mysql -u root -p                 # консоль MySQL
+docker exec -it nginx sh                             # оболочка внутри Nginx
+docker exec -it docker-app-1 sh                      # оболочка внутри одного из Go-контейнеров
