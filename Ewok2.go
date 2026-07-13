@@ -5,7 +5,7 @@ import (
     "fmt"
     "html/template"
     "net/http"
-
+    "os"
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -16,17 +16,20 @@ type PageData struct {
 
 // Глобальная переменная для подключения к БД (можно и по-другому, но для примера норм)
 var db *sql.DB
-
+var err error
 func main() {
     // Подключение к MySQL — замени пароль и имя базы на свои
-    connStr := "root:devops366@tcp(172.17.0.1:3308)/proekt"
-    var err error
-    db, err = sql.Open("mysql", connStr)
+    dbUser := os.Getenv("DB_USER")
+    dbPassword := os.Getenv("DB_PASSWORD")
+    dbHost := os.Getenv("DB_HOST")
+    dbPort := os.Getenv("DB_PORT")
+    dbName := os.Getenv("DB_NAME")
+    db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+    	dbUser, dbPassword, dbHost, dbPort, dbName))
     if err != nil {
-        panic(err)
-    }
-    defer db.Close()
-
+    	panic(err)
+	}
+// затем db.Ping()
     // Проверка подключения
     err = db.Ping()
     if err != nil {

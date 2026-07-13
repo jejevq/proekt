@@ -4,9 +4,9 @@ services:
     container_name: sql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: devops366
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ROOT_HOST: "%"
-      MYSQL_DATABASE: proekt
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
@@ -15,14 +15,13 @@ services:
       - net
 
   app:
-    build: .                        # путь к твоему Dockerfile (или замени на image: d:d)
-    restart: unless-stopped
+    build: .
     environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: devops366
-      DB_NAME: proekt
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
     depends_on:
       - db
     networks:
