@@ -11,8 +11,6 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - "3308:3306"                 # внешний порт для ручного доступа, как раньше
-    networks:
-      - net
 
   app:
     build: .
@@ -24,9 +22,6 @@ services:
       DB_NAME: ${DB_NAME}
     depends_on:
       - db
-    networks:
-      - net
-    # ports не нужны — всё через nginx
 
   nginx:
     image: nginx:latest
@@ -38,12 +33,7 @@ services:
       - "90:90"                     # внешний 90 -> внутренний 90 (соответствует твоему listen)
     depends_on:
       - app
-    networks:
-      - net
 
 volumes:
   mysql_data:
 
-networks:
-  net:
-    external: true                  # используем уже существующую сеть "net", а не создаём новую
