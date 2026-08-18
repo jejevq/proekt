@@ -1,0 +1,28 @@
+[Unit]
+Description=Мой проект Go + MySQL + Nginx
+# Ждать, пока Docker полностью загрузится
+Requires=docker.service
+After=docker.service network-online.target
+# Убедиться, что удалённые файловые системы смонтированы (если используется NFS и т.п.)
+# After=remote-fs.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# Папка, в которой лежит docker-compose.yml
+WorkingDirectory=/home/vitaliy/docker
+
+# Команда запуска
+ExecStart=/usr/bin/docker compose up -d --scale app=3
+
+# Команда остановки (контейнеры останавливаются и удаляются, тома остаются)
+ExecStop=/usr/bin/docker compose down
+
+# Перезапускать, если что-то пошло не так (но не чаще чем раз в 30 секунд)
+Restart=on-failure
+RestartSec=30
+
+[Install]
+# Запускать при обычной многопользовательской загрузке (runlevel 3)
+WantedBy=multi-user.target

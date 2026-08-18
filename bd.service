@@ -1,0 +1,19 @@
+[Unit]
+Description=Защита базы данных MySQL
+Requires=docker.service
+After=docker.service network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# 1) Сначала вставляем запрещающее правило (оно встанет на 1-е место)
+ExecStart=/usr/sbin/iptables -I DOCKER-USER -p tcp --dport 3308 -j DROP
+# 2) Затем вставляем разрешающее правило (оно встанет выше, на 1-е место)
+ExecStart=/usr/sbin/iptables -I DOCKER-USER -p tcp --dport 3308 -s 127.0.0.1 -j ACCEPT
+
+# При остановке сервиса удаляем правила (сначала ACCEPT, потом DROP)
+ExecStop=/usr/sbin/iptables -D DOCKER-USER -p tcp --dport 3308 -s 127.0.0.1 -j ACCEPT
+ExecStop=/usr/sbin/iptables -D DOCKER-USER -p tcp --dport 3308 -j DROP
+
+[Install]
+WantedBy=multi-user.target
