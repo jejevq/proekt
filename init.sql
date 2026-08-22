@@ -1,19 +1,19 @@
--- 1. Создаём базу
-CREATE DATABASE proekt;
+-- Создаём базу данных (если её ещё нет)
+CREATE DATABASE IF NOT EXISTS proekt;
 
--- 2. Создаём пользователя
-CREATE USER 'proekt'@'%' IDENTIFIED BY '123456';
+-- Создаём пользователя (пароль будет заменён из install.sh)
+CREATE USER IF NOT EXISTS 'proekt'@'%' IDENTIFIED BY '__USER_PASSWORD__';
 
--- 3. Даём пользователю права на эту базу
-GRANT ALL PRIVILEGES ON proekt.* TO 'proekt'@'%';
+-- Даём только необходимые права на базу proekt
+GRANT SELECT, INSERT, UPDATE, DELETE ON proekt.* TO 'proekt'@'%';
 FLUSH PRIVILEGES;
 
--- 4. Переключаемся на базу
+-- Переключаемся на базу proekt
 USE proekt;
 
--- 5. Создаём таблицу
-CREATE TABLE `proekt` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `out` varchar(40) NOT NULL,
-  PRIMARY KEY (`id`)
-)
+-- Создаём таблицу proekt (если её нет)
+CREATE TABLE IF NOT EXISTS proekt (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `out` VARCHAR(40) NOT NULL,
+  PRIMARY KEY (id)
+);
